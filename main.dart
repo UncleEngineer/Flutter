@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: Text('First App by Uncle'),
+              title: Text('แอพบันทึกของที่ซื้อแล้ว'),
               centerTitle: true,
             ),
             body: Home()));
@@ -21,25 +21,87 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var ctl_product = TextEditingController();
+  var ctl_price = TextEditingController();
+  var ctl_quantity = TextEditingController();
+  var result = '------Result------';
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ListView(
       children: [
-        Center(
-          child: Text(
-            'สวัสดีชาวโลก',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 50.0,
-                color: Colors.blue[900],
-                fontFamily: 'SdProtector'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
+              child: Text(
+                'เด็กนาย',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50.0,
+                    color: Colors.blue[900],
+                    fontFamily: 'SdProtector'),
+              ),
+            ),
+            Icon(
+              Icons.add_comment,
+              size: 100,
+              color: Colors.blue[900],
+            )
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+          child: Image.asset(
+            'assets/bike.png',
+            scale: 0.7,
           ),
         ),
-        Icon(
-          Icons.alarm,
-          size: 100,
-        )
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: TextField(
+              controller: ctl_product,
+              decoration: InputDecoration(
+                  labelText: 'สินค้า', border: OutlineInputBorder()),
+            )),
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: TextField(
+              controller: ctl_price,
+              decoration: InputDecoration(
+                  labelText: 'ราคา', border: OutlineInputBorder()),
+            )),
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: TextField(
+              controller: ctl_quantity,
+              decoration: InputDecoration(
+                  labelText: 'จำนวน', border: OutlineInputBorder()),
+            )),
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: ElevatedButton(
+              onPressed: () {
+                var v1 = int.parse(ctl_price.text);
+                var v2 = int.parse(ctl_quantity.text);
+                var calculate = v1 * v2;
+                print("Cal: $calculate Baht ");
+                var productname = ctl_product.text;
+                setState(() {
+                  result =
+                      "สินค้า: $productname\nราคา: $v1\nจำนวน: $v2\nรวมทั้งหมด: $calculate บาท";
+                });
+              },
+              child: Row(
+                children: [Icon(Icons.send), Text('ส่งข้อความไปหานาย')],
+              ),
+            )),
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: Text(
+              result,
+              style: TextStyle(fontSize: 30.0),
+            )),
       ],
     );
   }
