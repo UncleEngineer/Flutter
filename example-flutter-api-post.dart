@@ -105,7 +105,7 @@ class _AddProductState extends State<AddProduct> {
           var v3 = int.parse(ctl_quantity.text.toString());
 
           // set up POST request arguments
-          String url = 'http://uncle-bookstore.com/api/post';
+          String url = 'http://uncledjango50.com:8000/api/post'; 
           Map<String, String> headers = {"Content-type": "application/json"};
 
           String json = '{"name": "$v1", "price": $v2, "quan": $v3 ,"desc":"-"}';
