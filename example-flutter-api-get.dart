@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<String> _makeGetRequest() async {
     // make GET request
-    String url = 'http://www.uncle-bookstore.com/api/';
+    String url = 'http://uncledjango50.com:8000/api/';
     //String url = 'http://uncle-flutter.com/api';
     var response = await http.get(url);
     // sample info available in response
