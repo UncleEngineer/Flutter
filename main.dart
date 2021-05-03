@@ -81,6 +81,7 @@ class _HomeState extends State<Home> {
         Padding(
             padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
             child: ElevatedButton(
+              style: raisedButtonStyle,
               onPressed: () {
                 var v1 = int.parse(ctl_price.text);
                 var v2 = int.parse(ctl_quantity.text);
@@ -92,10 +93,26 @@ class _HomeState extends State<Home> {
                       "สินค้า: $productname\nราคา: $v1\nจำนวน: $v2\nรวมทั้งหมด: $calculate บาท";
                 });
               },
-              child: Row(
-                children: [Icon(Icons.send), Text('ส่งข้อความไปหานาย')],
-              ),
-            )),
+              child: Text('ส่งข้อความไปหานาย'),
+            )
+
+            // ElevatedButton(
+            //   onPressed: () {
+            //     var v1 = int.parse(ctl_price.text);
+            //     var v2 = int.parse(ctl_quantity.text);
+            //     var calculate = v1 * v2;
+            //     print("Cal: $calculate Baht ");
+            //     var productname = ctl_product.text;
+            //     setState(() {
+            //       result =
+            //           "สินค้า: $productname\nราคา: $v1\nจำนวน: $v2\nรวมทั้งหมด: $calculate บาท";
+            //     });
+            //   },
+            //   child: Row(
+            //     children: [Icon(Icons.send), Text('ส่งข้อความไปหานาย')],
+            //   ),
+            // )
+            ),
         Padding(
             padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
             child: Text(
@@ -106,3 +123,13 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+  onPrimary: Colors.blue[400],
+  primary: Colors.blue[900],
+  minimumSize: Size(88, 50),
+  padding: EdgeInsets.symmetric(horizontal: 16),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(5)),
+  ),
+);
