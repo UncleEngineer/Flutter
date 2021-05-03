@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 main() => runApp(MyApp());
 
@@ -25,6 +28,7 @@ class _HomeState extends State<Home> {
   var ctl_price = TextEditingController();
   var ctl_quantity = TextEditingController();
   var result = '------Result------';
+  var result2 = '------สถานะ------';
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +95,8 @@ class _HomeState extends State<Home> {
                 setState(() {
                   result =
                       "สินค้า: $productname\nราคา: $v1\nจำนวน: $v2\nรวมทั้งหมด: $calculate บาท";
+                  result2 = '...';
+                  _makePostRequest();
                 });
               },
               child: Text('ส่งข้อความไปหานาย'),
@@ -119,8 +125,49 @@ class _HomeState extends State<Home> {
               result,
               style: TextStyle(fontSize: 30.0),
             )),
+        Padding(
+            padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: Text(
+              result2,
+              style: TextStyle(fontSize: 10.0),
+            )),
       ],
     );
+  }
+
+  Future<String> _makePostRequest() async {
+    var v1 = ctl_product.text.toString();
+    var v2 = int.parse(ctl_price.text.toString());
+    var v3 = int.parse(ctl_quantity.text.toString());
+
+    // set up POST request arguments
+    String url = 'http://uncledjango50.com:8000/api/post';
+    Map<String, String> headers = {"Content-type": "application/json"};
+
+    String json = '{"name": "$v1", "price": $v2, "quan": $v3 ,"desc":"-"}';
+    // make POST request
+    var response = await http.post(url, headers: headers, body: json);
+    // check the status code for the result
+    int statusCode = response.statusCode;
+
+    if (statusCode == 201) {
+      setState(() {
+        result2 = 'บันทึกสำเร็จ';
+      });
+    }
+
+    // this API passes back the id of the new item added to the body
+    String body = response.body;
+    print('---CODE---');
+    print(statusCode);
+    print('---BODY---');
+    print(body);
+    // {
+    //   "title": "Hello",
+    //   "body": "body text",
+    //   "userId": 1,
+    //   "id": 101
+    // }
   }
 }
 
